@@ -1,7 +1,7 @@
 import app from 'flarum/admin/app';
 
-app.initializers.add('clarkwinkelmann-scout', () => {
-    app.extensionData.for('clarkwinkelmann-scout')
+app.initializers.add('dshovchko-scout', () => {
+    app.extensionData.for('dshovchko-scout')
         .registerSetting({
             type: 'select',
             setting: 'clarkwinkelmann-scout.driver',
@@ -31,6 +31,20 @@ app.initializers.add('clarkwinkelmann-scout', () => {
             label: app.translator.trans('clarkwinkelmann-scout.admin.setting.limit'),
             placeholder: app.translator.trans('clarkwinkelmann-scout.admin.setting.limitPlaceholder'),
             help: app.translator.trans('clarkwinkelmann-scout.admin.setting.limitHelp'),
+        })
+        .registerSetting({
+            type: 'select',
+            setting: 'clarkwinkelmann-scout.rankingStrategy',
+            options: {
+                default: app.translator.trans('clarkwinkelmann-scout.admin.setting.rankingStrategyOption.default'),
+                title_first: app.translator.trans('clarkwinkelmann-scout.admin.setting.rankingStrategyOption.titleFirst'),
+                exact_title_post: app.translator.trans('clarkwinkelmann-scout.admin.setting.rankingStrategyOption.exactTitlePost'),
+                title_only: app.translator.trans('clarkwinkelmann-scout.admin.setting.rankingStrategyOption.titleOnly'),
+                posts_only: app.translator.trans('clarkwinkelmann-scout.admin.setting.rankingStrategyOption.postsOnly'),
+            },
+            default: 'default',
+            label: app.translator.trans('clarkwinkelmann-scout.admin.setting.rankingStrategy'),
+            help: app.translator.trans('clarkwinkelmann-scout.admin.setting.rankingStrategyHelp'),
         })
         .registerSetting({
             type: 'number',

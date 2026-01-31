@@ -1,5 +1,5 @@
 {
-    "name": "clarkwinkelmann/flarum-ext-scout",
+    "name": "dshovchko/flarum-ext-scout",
     "description": "Algolia and Meilisearch search for Flarum",
     "keywords": [
         "flarum"
@@ -24,10 +24,15 @@
             "name": "Clark Winkelmann",
             "email": "clark.winkelmann@gmail.com",
             "role": "Developer"
+        },
+        {
+            "name": "Dmytro Shovchko",
+            "email": "d.shovchko@gmail.com",
+            "role": "Maintainer"
         }
     ],
     "support": {
-        "source": "https://github.com/clarkwinkelmann/flarum-ext-scout",
+        "source": "https://github.com/dshovchko/flarum-ext-scout",
         "forum": "https://discuss.flarum.org/d/30874"
     },
     "autoload": {
