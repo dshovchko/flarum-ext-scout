@@ -15,6 +15,14 @@ clarkwinkelmann-scout:
             limitHelp: >
                 This will override the number of results requested to the search engine and influence the number of pages of results that can be generated (the limit also counts content the user will not be able to see).
                 Some engines might require additional configuration to change the max allowed.
+            rankingStrategy: Discussion ranking strategy
+            rankingStrategyHelp: Choose how discussion titles and post content are prioritized in search results.
+            rankingStrategyOption:
+                default: Original Scout merge (post matches first)
+                titleFirst: Title-first (exact title > title words > exact posts > post words)
+                exactTitlePost: Exact-first (exact title > exact posts > title words > post words)
+                titleOnly: Title only (exact title > title words)
+                postsOnly: Posts only (exact posts > post words)
             queryMinLength: Minimum query length for suggestions
             queryMinLengthPlaceholder: Auto
             queryMinLengthHelp: >

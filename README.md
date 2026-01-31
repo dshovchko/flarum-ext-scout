@@ -1,8 +1,11 @@
 # Scout Search for Flarum
 
-[![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/clarkwinkelmann/flarum-ext-scout/blob/master/LICENSE.md) [![Latest Stable Version](https://img.shields.io/packagist/v/clarkwinkelmann/flarum-ext-scout.svg)](https://packagist.org/packages/clarkwinkelmann/flarum-ext-scout) [![Total Downloads](https://img.shields.io/packagist/dt/clarkwinkelmann/flarum-ext-scout.svg)](https://packagist.org/packages/clarkwinkelmann/flarum-ext-scout) [![Donate](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.me/clarkwinkelmann)
+[![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dshovchko/flarum-ext-scout/blob/main/LICENSE.txt) [![Latest Stable Version](https://img.shields.io/packagist/v/dshovchko/flarum-ext-scout.svg)](https://packagist.org/packages/dshovchko/flarum-ext-scout) [![Total Downloads](https://img.shields.io/packagist/dt/dshovchko/flarum-ext-scout.svg)](https://packagist.org/packages/dshovchko/flarum-ext-scout)
 
 Integrates [Laravel Scout](https://laravel.com/docs/9.x/scout) with [Flarum](https://flarum.org/) discussion and user search.
+
+This is a fork of the original Scout Search extension. It adds a configurable **discussion ranking strategy** so you can choose how title and post matches are prioritized.
+We introduced this because the original merge of discussion and post indices can sometimes surface post content matches above exact title matches, which is not ideal for some communities.
 
 Just like with Laravel, the data is automatically synced with the search index every time a model is updated in Flarum.
 You only need to manually import data when you enable the extension (see commands below).
@@ -85,7 +88,7 @@ What each setting does isn't entirely clear, TNTSearch own documentation doesn't
 > This extension is still experimental. Please test on a staging server first.
 > I have not tested Algolia personally yet, but from feedback it seems to be working.
 
-    composer require clarkwinkelmann/flarum-ext-scout
+    composer require dshovchko/flarum-ext-scout
 
 ## Supported extensions and fields
 
@@ -115,6 +118,16 @@ Email is intentionally not searchable because there's currently no mechanism tha
 ### Formulaire
 
 Forms and Submissions are optionally indexed via Scout. See [Formulaire documentation](https://kilowhat.net/flarum/extensions/formulaire#scout-integration) for details.
+
+## Discussion ranking strategies (fork)
+
+You can select a strategy in the extension settings. Available options:
+
+- **Original Scout merge (post matches first)**: default behavior from the upstream extension.
+- **Title-first (exact title > title words > exact posts > post words)**
+- **Exact-first (exact title > exact posts > title words > post words)**
+- **Title only (exact title > title words)**
+- **Posts only (exact posts > post words)**
 
 ## Developers
 
@@ -267,17 +280,10 @@ $users = User::newQuery()
 
 ## Support
 
-This extension is under **minimal maintenance**.
-
-It was developed for a client and released as open-source for the benefit of the community.
-I might publish simple bugfixes or compatibility updates for free.
-
-You can [contact me](https://clarkwinkelmann.com/flarum) to sponsor additional features or updates.
-
-Support is offered on a "best effort" basis through the Flarum community thread.
+This fork is maintained by **dshovchko**. Please use GitHub issues for bug reports and feature requests.
 
 ## Links
 
-- [GitHub](https://github.com/clarkwinkelmann/flarum-ext-scout)
-- [Packagist](https://packagist.org/packages/clarkwinkelmann/flarum-ext-scout)
+- [GitHub](https://github.com/dshovchko/flarum-ext-scout)
+- [Packagist](https://packagist.org/packages/dshovchko/flarum-ext-scout)
 - [Discuss](https://discuss.flarum.org/d/30874)
