@@ -14,10 +14,21 @@ use ClarkWinkelmann\Scout\Search\Ranking\TitleOnlyRankingStrategy;
 
 class DiscussionGambit implements GambitInterface
 {
+    protected SettingsRepositoryInterface $settings;
+
+    /**
+     * @var array<string, RankingStrategyInterface>
+     */
+    protected array $strategies = [];
+
+    public function __construct(SettingsRepositoryInterface $settings)
+    {
+        $this->settings = $settings;
+    }
+
     public function apply(SearchState $search, $bit)
     {
-        $settings = resolve(SettingsRepositoryInterface::class);
-        $strategyKey = $settings->get('clarkwinkelmann-scout.rankingStrategy') ?: 'default';
+        $strategyKey = $this->settings->get('clarkwinkelmann-scout.rankingStrategy') ?: 'default';
 
         $strategy = $this->resolveStrategy($strategyKey);
         $strategy->apply($search, $bit);
@@ -25,18 +36,31 @@ class DiscussionGambit implements GambitInterface
 
     protected function resolveStrategy(string $strategyKey): RankingStrategyInterface
     {
+        if (isset($this->strategies[$strategyKey])) {
+            return $this->strategies[$strategyKey];
+        }
+
         switch ($strategyKey) {
             case 'title_first':
-                return new TitleFirstRankingStrategy();
+                $strategy = new TitleFirstRankingStrategy();
+                break;
             case 'exact_title_post':
-                return new ExactTitlePostRankingStrategy();
+                $strategy = new ExactTitlePostRankingStrategy();
+                break;
             case 'title_only':
-                return new TitleOnlyRankingStrategy();
+                $strategy = new TitleOnlyRankingStrategy();
+                break;
             case 'posts_only':
-                return new PostsOnlyRankingStrategy();
+                $strategy = new PostsOnlyRankingStrategy();
+                break;
             case 'default':
             default:
-                return new DefaultRankingStrategy();
+                $strategy = new DefaultRankingStrategy();
+                break;
         }
+
+        $this->strategies[$strategyKey] = $strategy;
+
+        return $strategy;
     }
 }
