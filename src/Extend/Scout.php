@@ -132,7 +132,7 @@ class Scout implements ExtenderInterface
         // By design extensions will always call the extender if Scout is installed without checking if it's enabled
         // We could continue setting the container bindings which would just never be used
         // But the model scope and event listeners must be skipped if the extension is disabled
-        if (!$manager->isEnabled('clarkwinkelmann-scout')) {
+        if (!$manager->isEnabled('dshovchko-scout')) {
             return;
         }
 
