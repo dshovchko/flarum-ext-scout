@@ -15,7 +15,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Laravel\Scout\EngineManager;
 use Laravel\Scout\Scout;
-use MeiliSearch\Client as MeiliSearch;
 
 /**
  * Similar to Laravel\Scout\ScoutServiceProvider without the config and command parts
@@ -24,18 +23,27 @@ class ScoutServiceProvider extends AbstractServiceProvider
 {
     public function register()
     {
-        if (class_exists(MeiliSearch::class)) {
-            $this->container->singleton(MeiliSearch::class, function () {
+        $meilisearchClass = class_exists(\Meilisearch\Client::class)
+            ? \Meilisearch\Client::class
+            : (class_exists(\MeiliSearch\Client::class) ? \MeiliSearch\Client::class : null);
+
+        if ($meilisearchClass) {
+            $this->container->singleton($meilisearchClass, function () use ($meilisearchClass) {
                 /**
                  * @var SettingsRepositoryInterface $settings
                  */
                 $settings = $this->container->make(SettingsRepositoryInterface::class);
 
-                return new MeiliSearch(
+                return new $meilisearchClass(
                     $settings->get('clarkwinkelmann-scout.meilisearchHost') ?: '127.0.0.1:7700',
                     $settings->get('clarkwinkelmann-scout.meilisearchKey')
                 );
             });
+
+            $alias = $meilisearchClass === \Meilisearch\Client::class
+                ? \MeiliSearch\Client::class
+                : \Meilisearch\Client::class;
+            $this->container->alias($meilisearchClass, $alias);
         }
 
         $this->container->singleton(EngineManager::class, function ($app) {
